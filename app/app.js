@@ -22,7 +22,7 @@ var server = http.createServer(function(request, response) {
                 html += "</ul>";
                 html += "</body>";
                 html += "</html>";
-                response.write(html);
+                response.writeHead(200, { "Content-type": "text/html" });
                 break;
 
             case "/add.html":
@@ -32,7 +32,7 @@ var server = http.createServer(function(request, response) {
                 html += "Add";
                 html += "</body>";
                 html += "</html>";
-                response.write(html);
+                response.writeHead(200, { "Content-type": "text/html" });
                 break;
 
             case "/edit.html":
@@ -42,7 +42,7 @@ var server = http.createServer(function(request, response) {
                 html += "Edit";
                 html += "</body>";
                 html += "</html>";
-                response.write(html);
+                response.writeHead(200, { "Content-type": "text/html" });
                 break;
 
             case "/delete.html":
@@ -52,7 +52,7 @@ var server = http.createServer(function(request, response) {
                 html += "Delete";
                 html += "</body>";
                 html += "</html>";
-                response.write(html);
+                response.writeHead(200, { "Content-type": "text/html" });
                 break;
 
             case "/find.html":
@@ -62,16 +62,21 @@ var server = http.createServer(function(request, response) {
                 html += "Find";
                 html += "</body>";
                 html += "</html>";
-                response.write(html);
+                response.writeHead(200, { "Content-type": "text/html" });
                 break;
 
             default:
-                console.log("Invalid request: " + request.url);
+                html += "<html>";
+                html += "<title>Hello World</title>";
+                html += "<body>";
+                html += "404 not found";
+                html += "</body>";
+                html += "</html>";
+                response.writeHead(404, { "Content-type": "text/html" });
                 break;
         }
+        response.end(html);
     }
-
-    response.end();
 });
 
-server.listen("7790");
+server.listen("7798");
