@@ -1,9 +1,12 @@
+var app = {};
+app.add = require('../app/controller/add.js').add;
+
 var http = require("http");
 var fs = require("fs");
 var qs = require("querystring");
 
 // stores the git feeds
-var gits = [];
+app.gits = [];
 
 var server = http.createServer(function(request, response) {
     console.log(request.method);
@@ -40,41 +43,9 @@ var server = http.createServer(function(request, response) {
                 break;
         }
     } else if (request.method === "POST") {
-        var formData = "";
         switch (request.url) {
             case "/add":
-
-                request.on("data", function(chunk) {
-                    formData += chunk;
-                    // console.log("data: " + chunk);
-                });
-
-                request.on("end", function() {
-                    // console.log("end: " + formData);
-                    var git = qs.parse(formData);
-                    console.log("add: 1, " + JSON.stringify(git).toString());
-                    gits.push(git);
-                    var reshtml = "<table>";
-                    reshtml += "<tr><th>git</th><th>name</th><th>email</th></tr>";
-                    for (var i = 0; i < gits.length; i++) {
-                        reshtml += "<tr>";
-                        reshtml += "<td>" + gits[i].git + "</td>";
-                        reshtml += "<td>" + gits[i].name + "</td>";
-                        reshtml += "<td>" + gits[i].email + "</td>";
-                        reshtml += "</tr>";
-                    }
-                    reshtml += "</table>";
-
-                    fs.readFile("./add.html", function(err, data) {
-                        if (err) throw err;
-
-                        var content = data.toString();
-                        content = content.replace(/<section\sid="response">\s*<\/section>/gi, reshtml);
-                        response.writeHead(200, { "Content-type": "text/html" });
-                        response.end(content);
-                    });
-                });
-
+                app.add(request, response, app, qs, fs);
                 break;
             case "/edit":
                 break;
