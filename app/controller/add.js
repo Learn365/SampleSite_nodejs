@@ -2,13 +2,10 @@ function add(request, response, app, qs, fs) {
     var formData = "";
     request.on("data", function(chunk) {
         formData += chunk;
-        // console.log("data: " + chunk);
     });
 
     request.on("end", function() {
-        // console.log("end: " + formData);
         var git = qs.parse(formData);
-        console.log("add: 1, " + JSON.stringify(git).toString());
         app.gits.push(git);
         var reshtml = "<table>";
         reshtml += "<tr><th>git</th><th>name</th><th>email</th></tr>";
