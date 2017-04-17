@@ -1,0 +1,23 @@
+{
+  "name": "samplesite",
+  "version": "1.0.0",
+  "description": "demostrate a website built on nodejs with express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Learn365/SampleSite_nodejs.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "Baikang wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Learn365/SampleSite_nodejs/issues"
+  },
+  "homepage": "https://github.com/Learn365/SampleSite_nodejs#readme"
+}
