@@ -1,4 +1,4 @@
-function remove(request, response, app, qs, fs) {
+function remove(request, response, gits, qs, fs) {
     'use strict';
     // acquire email
     var formdata = "";
@@ -10,11 +10,11 @@ function remove(request, response, app, qs, fs) {
     request.on("end", function() {
         var email = qs.parse(formdata).removeEmail;
 
-        var index = app.gits.findIndex(function(g) {
+        var index = gits.findIndex(function(g) {
             return g.email === email;
         });
 
-        app.gits.splice(index, 1);
+        gits.splice(index, 1);
 
         response.writeHead(302, { "Location": "/find" });
         response.end();

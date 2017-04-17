@@ -1,6 +1,6 @@
-function find(request, response, app, email, fs) {
+function find(request, response, gits, email, fs) {
     'use strict';
-    var git = app.gits.find(function(g) {
+    var git = gits.find(function(g) {
         return g.email === email;
     });
 

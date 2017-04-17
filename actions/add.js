@@ -1,4 +1,4 @@
-function add(request, response, app, qs, fs) {
+function add(request, response, gits, qs, fs) {
     var formData = "";
     request.on("data", function(chunk) {
         formData += chunk;
@@ -6,14 +6,14 @@ function add(request, response, app, qs, fs) {
 
     request.on("end", function() {
         var git = qs.parse(formData);
-        app.gits.push(git);
+        gits.push(git);
         var reshtml = "<table>";
         reshtml += "<tr><th>git</th><th>name</th><th>email</th></tr>";
-        for (var i = 0; i < app.gits.length; i++) {
+        for (var i = 0; i < gits.length; i++) {
             reshtml += "<tr>";
-            reshtml += "<td>" + app.gits[i].git + "</td>";
-            reshtml += "<td>" + app.gits[i].name + "</td>";
-            reshtml += "<td>" + app.gits[i].email + "</td>";
+            reshtml += "<td>" + gits[i].git + "</td>";
+            reshtml += "<td>" + gits[i].name + "</td>";
+            reshtml += "<td>" + gits[i].email + "</td>";
             reshtml += "</tr>";
         }
         reshtml += "</table>";

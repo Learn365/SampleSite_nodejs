@@ -1,4 +1,4 @@
-function edit(request, response, app, qs, fs) {
+function edit(request, response, gits, qs, fs) {
     'use strict';
     var formdata = "";
     request.on("data", function(chunk) {
@@ -15,12 +15,12 @@ function edit(request, response, app, qs, fs) {
             email: data.email
         };
 
-        var index = app.gits.findIndex(function(g) {
+        var index = gits.findIndex(function(g) {
             return g.email === data.oEmail;
         });
 
-        app.gits.splice(index, 1);
-        app.gits.push(git);
+        gits.splice(index, 1);
+        gits.push(git);
 
         response.writeHead(302, { "Location": "/edit?editEmail=" + git.email });
         response.end();
@@ -36,7 +36,7 @@ function edit(request, response, app, qs, fs) {
 
 function editWithEmail(request, response, app, email, fs) {
     'use strict';
-    var git = app.gits.find(function(g) {
+    var git = gits.find(function(g) {
         return g.email === email;
     });
 
