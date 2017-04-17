@@ -26,7 +26,7 @@ router.get("/index", function(req, res) {
 // GET: /add
 // display add page
 router.get("/add", function(req, res) {
-    res.status(200).sendfile("./add.html");
+    res.render("add", { gits: gits });
 });
 
 // GET: /edit
@@ -64,7 +64,7 @@ router.get("/remove", function(req, res) {
 // POST: /add
 // add a git entry
 router.post("/add", function(req, res) {
-    mAdd.add(req, res, gits, qs, fs);
+    mAdd.add(req, res, gits);
 });
 
 // POST: /edit

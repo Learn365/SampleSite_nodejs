@@ -1,32 +1,16 @@
-function add(request, response, gits, qs, fs) {
-    var formData = "";
-    request.on("data", function(chunk) {
-        formData += chunk;
-    });
+function add(req, res, gits) {
+    var strGit = req.fields.git;
+    var name = req.fields.name;
+    var email = req.fields.email;
 
-    request.on("end", function() {
-        var git = qs.parse(formData);
-        gits.push(git);
-        var reshtml = "<table>";
-        reshtml += "<tr><th>git</th><th>name</th><th>email</th></tr>";
-        for (var i = 0; i < gits.length; i++) {
-            reshtml += "<tr>";
-            reshtml += "<td>" + gits[i].git + "</td>";
-            reshtml += "<td>" + gits[i].name + "</td>";
-            reshtml += "<td>" + gits[i].email + "</td>";
-            reshtml += "</tr>";
-        }
-        reshtml += "</table>";
+    var git = {
+        git: strGit,
+        name: name,
+        email: email
+    }
+    gits.push(git);
 
-        fs.readFile("./add.html", function(err, data) {
-            if (err) throw err;
-
-            var content = data.toString();
-            content = content.replace(/<section\sid="response">\s*<\/section>/gi, reshtml);
-            response.writeHead(200, { "content-type": "text/html" });
-            response.end(content);
-        });
-    });
+    res.render("add", { gits: gits });
 }
 
 module.exports.add = add;

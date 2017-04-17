@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <meta charset="utf8" />
+</head>
+
+<title>
+    Hello World
+</title>
+
+<body>
+    <a href="/index" title="home">Home</a> &gt; Add
+    <hr/>
+    <form action="/add" method="POST">
+        <label for="git">Git: </label><input type="text" id="git" name="git"></input><br/>
+        <label for="name">Name: </label><input type="text" id="name" name="name"></inpu><br/>
+        <label for="email">Email: </label><input type="text" id="email" name="email"></input><br/>
+        <input type="submit" value="Add"></input>
+    </form>
+    <% if(gits && gits.length>0){ %>
+        <table>
+            <thead>
+                <tr>
+                    <td>git</td>
+                    <td>name</td>
+                    <td>email</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% gits.forEach(function(git){ %>
+                <tr>
+                    <td><%= git.git%></td>
+                    <td><%= git.name%></td>
+                    <td><%= git.email%></td>
+                </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } %>
+</body>
+
+</html>
