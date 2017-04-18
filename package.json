@@ -27,6 +27,8 @@
     "express": "^4.15.2",
     "express-formidable": "^1.0.0",
     "express-session": "^1.15.2",
-    "path-to-regexp": "^1.7.0"
+    "express-winston": "^2.3.0",
+    "path-to-regexp": "^1.7.0",
+    "winston": "^2.3.1"
   }
 }

@@ -8,6 +8,9 @@ var pkg = require("./package");
 var session = require("express-session");
 var path = require("path");
 var express = require("express");
+var winston = require("winston");
+var expressWinston = require("express-winston");
+
 var app = express();
 var router = require("./routes/index");
 
@@ -38,8 +41,34 @@ app.use(function(req, res, next) {
     next();
 });
 
+// register request logger
+app.use(expressWinston.logger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: "logs/success.log"
+        })
+    ]
+}));
+
 //config routing
 router(app);
+
+// register request logger
+app.use(expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console({
+            json: true,
+            colorize: true
+        }),
+        new winston.transports.File({
+            filename: "logs/error.log"
+        })
+    ]
+}));
 
 app.listen(config.app.port, function() {
     console.log(`${pkg.name} is listening on port: ${config.app.port}`);

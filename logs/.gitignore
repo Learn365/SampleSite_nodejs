@@ -1,0 +1,6 @@
+########################
+# ignore everything
+*
+########################
+# but exclude the ignore file self
+!.gitignore
