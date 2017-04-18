@@ -41,7 +41,7 @@ router.get("/edit", function(req, res) {
     // edit with email
     if (req.query.email) {
         var oEmail = req.query.email;
-        controller.editWithEmail(req, res, gits, oEmail, fs);
+        controller.editWithEmail(req, res, gits, oEmail);
     } else {
         res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: "", error: "Email Unknown" });
     }
@@ -60,9 +60,9 @@ router.get("/find", function(req, res) {
     // find git entry by email
     if (req.query.email) {
         var pEmail = req.query.email;
-        controller.find(req, res, gits, pEmail, fs);
+        controller.find(req, res, gits, pEmail);
     } else {
-        res.status(200).sendFile("find.html", { root: rootPath });
+        res.render("find", { git: null, error: null });
     }
 });
 

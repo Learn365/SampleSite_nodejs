@@ -57,44 +57,17 @@ module.exports = {
         }
     },
 
-    find: function find(req, res, gits, email, fs) {
+    find: function find(req, res, gits, email) {
         var git = gits.find(function(g) {
             return g.email === email;
         });
 
-        var reshtml = "";
-        if (git) {
-            reshtml += "<table>" +
-                "<tr>" +
-                "<td>Git: </td><td>" + git.git + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "<td>Name: </td><td>" + git.name + "</td>" +
-                "</tr>" +
-                "<tr>" +
-                "<td>Email: </td><td>" + git.email + "</td>" +
-                "</tr>" +
-                "</table>" +
-                "<form action=\"/edit\" method=\"GET\">" +
-                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
-                "<input type=\"submit\" value=\"Edit\"></input>" +
-                "</form>" +
-                "<form action=\"/remove\" method=\"POST\">" +
-                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
-                "<input type=\"submit\" value=\"Remove\"></input>" +
-                "</form>";
-        } else {
-            reshtml = "Nothing found";
+        var error = null;
+        if (!git) {
+            error = "Nothing found";
         }
 
-        fs.readFile("./find.html", function(err, data) {
-            if (err) throw err;
-
-            var content = data.toString();
-            content = content.replace(/<section\sid="resFind">\s*<\/section>/gi, reshtml);
-            res.writeHead(200, { "content-type": "text/html" });
-            res.end(content);
-        });
+        res.render("find", { git: git, error: error });
     },
     remove: function remove(req, res, gits, qs) {
         // acquire email

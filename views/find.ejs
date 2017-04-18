@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <meta charset="utf8" />
+</head>
+
+<title>
+    Hello World
+</title>
+
+<body>
+    <a href="/index" title="home">Home</a> &gt; Find
+    <hr/>
+    <form action="/find" method="GET">
+        <label for="email">Email: </label><input type="text" id="email" name="email"></input><input type="submit" value="Find"></input>
+    </form>
+    <hr/>
+    <% if (git){ %>
+        <table>
+            <tr>
+                <td><%= git.git %></td>
+                <td><%= git.name %></td>
+                <td><%= git.email %></td>
+                <td><a href="/edit?email=<%= git.email%>" title="Edit">Edit</a></td>
+                <td><a href="/remove?email=<%= git.email%>" title="Remove">Remove</a></td>
+            </tr>
+        </table>
+    <% }%>
+    <% if (error) { %>
+        <h3>error</h3>
+    <% } %>
+</body>
+
+</html>
