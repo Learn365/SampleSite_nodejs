@@ -28,17 +28,29 @@ router.get("/add", function(req, res) {
     res.render("add", { gits: gits });
 });
 
+// POST: /add
+// add a git entry
+router.post("/add", function(req, res) {
+    controller.add(req, res, gits, qs);
+});
+
 // GET: /edit
 // display edit page
 router.get("/edit", function(req, res) {
     // GET: /edit?email=xxxx
     // edit with email
     if (req.query.email) {
-        var pEmail = req.query.email;
-        controller.editWithEmail(req, res, gits, pEmail, fs);
+        var oEmail = req.query.email;
+        controller.editWithEmail(req, res, gits, oEmail, fs);
     } else {
-        res.status(200).sendFile("edit.html", { root: rootPath });
+        res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: "", error: "Email Unknown" });
     }
+});
+
+// POST: /edit
+// edit a git entry
+router.post("/edit", function(req, res) {
+    controller.edit(req, res, gits, qs);
 });
 
 // GET: /find
@@ -60,17 +72,6 @@ router.get("/remove", function(req, res) {
     res.status(200).sendFile("remove.html", { root: rootPath });
 });
 
-// POST: /add
-// add a git entry
-router.post("/add", function(req, res) {
-    controller.add(req, res, gits, qs);
-});
-
-// POST: /edit
-// edit a git entry
-router.post("/edit", function(req, res) {
-    controller.edit(req, res, gits, qs);
-});
 
 // POST: /remove
 // remove a git entry

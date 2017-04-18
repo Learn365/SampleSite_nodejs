@@ -13,7 +13,6 @@ module.exports = {
     },
 
     edit: function edit(req, res, gits, qs) {
-        'use strict';
         var formdata = "";
         req.on("data", function(chunk) {
             formdata += chunk;
@@ -22,7 +21,7 @@ module.exports = {
         // remove the git entry form the collection
         req.on("end", function() {
             var data = qs.parse(formdata);
-
+            var oEmail = req.query.email;
             var git = {
                 git: data.git,
                 name: data.name,
@@ -30,36 +29,35 @@ module.exports = {
             };
 
             var index = gits.findIndex(function(g) {
-                return g.email === data.oEmail;
+                return g.email === oEmail;
             });
 
-            gits.splice(index, 1);
-            gits.push(git);
+            if (index) {
+                gits.splice(index, 1);
+                gits.push(git);
+                // update oEmail to the latest
+                oEmail = git.email;
+                res.redirect(302, "/edit?email=" + oEmail);
+            } else {
+                var error = "NOT EXISTS";
+                res.render("edit", { git: git, oEmail: oEmail, error: error });
+            }
 
-            res.writeHead(302, { "Location": "/edit?editEmail=" + git.email });
-            res.end();
         });
     },
 
-    editWithEmail: function editWithEmail(req, res, gits, email, fs) {
-        'use strict';
+    editWithEmail: function editWithEmail(req, res, gits, oEmail) {
         var git = gits.find(function(g) {
-            return g.email === email;
+            return g.email === oEmail;
         });
-
-        fs.readFile("./edit.html", function(err, data) {
-            if (err) throw err;
-
-            var content = data.toString();
-            content = content.replace(/<a\shref="\/find\?email=.*?"\stitle="find">/gi, "<a href=\"/find?email=" + git.email + "\" title=\"find\">");
-            content = content.replace(/<input\stype="hidden"\svalue=".*?"\sname="oEmail"><\/input>/gi, "<input type=\"hidden\" value=\"" + git.email + "\" name=\"oEmail\"></input>");
-            res.writeHead(200, { "content-type": "text/html" });
-            res.end(content);
-        });
+        if (git) {
+            res.render("edit", { git: git, oEmail: oEmail, error: null });
+        } else {
+            res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: oEmail, error: "NOT EXISTS" });
+        }
     },
 
     find: function find(req, res, gits, email, fs) {
-        'use strict';
         var git = gits.find(function(g) {
             return g.email === email;
         });
@@ -78,11 +76,11 @@ module.exports = {
                 "</tr>" +
                 "</table>" +
                 "<form action=\"/edit\" method=\"GET\">" +
-                "<input type=\"hidden\" name=\"editEmail\" value=\"" + git.email + "\"></input>" +
+                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
                 "<input type=\"submit\" value=\"Edit\"></input>" +
                 "</form>" +
                 "<form action=\"/remove\" method=\"POST\">" +
-                "<input type=\"hidden\" name=\"removeEmail\" value=\"" + git.email + "\"></input>" +
+                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
                 "<input type=\"submit\" value=\"Remove\"></input>" +
                 "</form>";
         } else {
@@ -100,7 +98,6 @@ module.exports = {
     },
 
     remove: function remove(req, res, gits, qs) {
-        'use strict';
         // acquire email
         var formdata = "";
         req.on("data", function(chunk) {
