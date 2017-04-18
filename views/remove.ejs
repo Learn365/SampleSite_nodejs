@@ -1,7 +1,7 @@
 <%- include("components/header")%>
     <a href="/index" title="home">Home</a> &gt; Remove
     <hr/>
-    <form action="/remove" method="POST">
+    <form method="POST">
         <label for="email">Email: </label><input type="text" id="email" name="email" value="<%= email %>"></input>
         <input type="submit" value="Remove"></input>
     </form>
