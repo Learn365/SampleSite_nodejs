@@ -1,14 +1,4 @@
-<html>
-
-<head>
-    <meta charset="utf8" />
-</head>
-
-<title>
-    Hello World
-</title>
-
-<body>
+<%- include("components/header")%>
     <a href="/index" title="home">Home</a> &gt; Find
     <hr/>
     <form action="/find" method="GET">
@@ -29,6 +19,4 @@
     <% if (error) { %>
         <h3><%= error %></h3>
     <% } %>
-</body>
-
-</html>
+<%- include("components/footer")%>

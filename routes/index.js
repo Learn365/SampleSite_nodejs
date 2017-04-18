@@ -4,7 +4,6 @@ var app = express();
 var router = express.Router();
 
 var controller = require("../controllers/git");
-var fs = require("fs");
 var qs = require("querystring");
 var gits = require("../store/gits").gits;
 var rootPath = path.join(__dirname, "../");
@@ -13,13 +12,13 @@ var rootPath = path.join(__dirname, "../");
 // GET: / 
 // home page
 router.get("/", function(req, res) {
-    res.status(200).sendFile("index.html", { root: rootPath });
+    res.render("index", { gits: gits });
 });
 
 // GET: /index
 // display home page
 router.get("/index", function(req, res) {
-    res.status(200).sendFile("index.html", { root: rootPath });
+    res.render("index", { gits: gits });
 });
 
 // GET: /add

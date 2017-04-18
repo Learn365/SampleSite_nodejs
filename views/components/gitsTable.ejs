@@ -1,0 +1,24 @@
+    <% if (gits && gits.length>0) { %>
+    <table>
+        <thead>
+            <tr>
+                <td>Git</td>
+                <td>Name</td>
+                <td>email</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </thead>
+        <tbody>
+        <% gits.forEach(function(git){ %>
+            <tr>
+                <td><%= git.git %></td>
+                <td><%= git.name %></td>
+                <td><%= git.email %></td>
+                <td><a href="/edit?email=<%= git.email %>">Edit</a></td>
+                <td><a href="/edit?email=<%= git.email %>">Remove</a></td>
+            </tr>
+        <% })%>
+        </tbody>
+    </table>
+    <% } %>
