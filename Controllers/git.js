@@ -14,6 +14,8 @@ module.exports = {
 
     edit: function edit(req, res, gits, qs) {
         var formdata = "";
+        // init email parameter
+        var oEmail = req.query.email;
         req.on("data", function(chunk) {
             formdata += chunk;
         });
@@ -21,7 +23,6 @@ module.exports = {
         // remove the git entry form the collection
         req.on("end", function() {
             var data = qs.parse(formdata);
-            var oEmail = req.query.email;
             var git = {
                 git: data.git,
                 name: data.name,
@@ -32,7 +33,7 @@ module.exports = {
                 return g.email === oEmail;
             });
 
-            if (index && index > 0) {
+            if (index >= 0) {
                 gits.splice(index, 1);
                 gits.push(git);
                 // update oEmail to the latest
@@ -84,7 +85,7 @@ module.exports = {
                 return g.email === email;
             });
 
-            if (index && index > 0) {
+            if (index >= 0) {
                 gits.splice(index, 1);
                 res.redirect(302, "/");
             } else {
