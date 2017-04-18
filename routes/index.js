@@ -69,7 +69,11 @@ router.get("/find", function(req, res) {
 // GET: /remove
 // display remove page
 router.get("/remove", function(req, res) {
-    res.status(200).sendFile("remove.html", { root: rootPath });
+    var email = "";
+    if (req.query.email) {
+        email = req.query.email;
+    }
+    res.render("remove", { email: email, error: null });
 });
 
 

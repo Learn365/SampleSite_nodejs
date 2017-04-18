@@ -32,7 +32,7 @@ module.exports = {
                 return g.email === oEmail;
             });
 
-            if (index) {
+            if (index && index > 0) {
                 gits.splice(index, 1);
                 gits.push(git);
                 // update oEmail to the latest
@@ -84,10 +84,12 @@ module.exports = {
                 return g.email === email;
             });
 
-            gits.splice(index, 1);
-
-            res.writeHead(302, { "Location": "/find" });
-            res.end();
+            if (index && index > 0) {
+                gits.splice(index, 1);
+                res.redirect(302, "/");
+            } else {
+                res.render("remove", { email: email, error: "NOT EXISTS" });
+            }
         });
     }
 };

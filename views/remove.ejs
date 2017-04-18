@@ -12,10 +12,14 @@
     <a href="/index" title="home">Home</a> &gt; Remove
     <hr/>
     <form action="/remove" method="POST">
-        <label for="email">Email: </label><input type="text" id="email" name="email"></input>
+        <label for="email">Email: </label><input type="text" id="email" name="email" value="<%= email %>"></input>
         <input type="submit" value="Remove"></input>
     </form>
-    <section id="response"></section>
+    <% if(error) { %>
+        <h3>
+            <%= error %>
+        </h3>
+    <% }%>
 </body>
 
 </html>
