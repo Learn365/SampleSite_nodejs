@@ -1,0 +1,11 @@
+{
+    "app": {
+        "port": 8080
+    },
+    "session": {
+        "secret": "simplesite",
+        "cookie": {
+            "maxAge": 6000
+        }
+    }
+}

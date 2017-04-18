@@ -1,6 +1,11 @@
 var flash = require("connect-flash");
+var config = require("config-lite")({
+    filename: "default",
+    config_basedir: __dirname,
+    config_dir: "config"
+});
+var pkg = require("./package");
 var session = require("express-session");
-// var cookieParser = require("cookie-parser");
 var path = require("path");
 var express = require("express");
 var app = express();
@@ -12,13 +17,11 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // config flash
-// app.use(cookieParser("samplesite"));
 app.use(session({
-    secret: "samplesite",
+    secret: config.session.secret,
     resave: true,
     saveUninitialized: false,
-    key: "sid",
-    cookie: { maxAge: 60000 }
+    cookie: { maxAge: config.session.cookie.maxAge }
 }));
 
 app.use(flash());
@@ -38,4 +41,6 @@ app.use(function(req, res, next) {
 //config routing
 router(app);
 
-app.listen("8080");
+app.listen(config.app.port, function() {
+    console.log(`${pkg.name} is listening on port: ${config.app.port}`);
+});
