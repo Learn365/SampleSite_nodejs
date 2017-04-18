@@ -31,7 +31,8 @@ router.get("/edit", function(req, res) {
         var oEmail = req.query.email;
         controller.editWithEmail(req, res, gits, oEmail);
     } else {
-        res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: "", error: "Email Unknown" });
+        req.flash("error", "Email Unknown");
+        res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: "" });
     }
 });
 
@@ -50,7 +51,7 @@ router.get("/find", function(req, res) {
         var pEmail = req.query.email;
         controller.find(req, res, gits, pEmail);
     } else {
-        res.render("find", { git: null, error: null });
+        res.render("find", { git: null });
     }
 });
 
@@ -61,7 +62,7 @@ router.get("/remove", function(req, res) {
     if (req.query.email) {
         email = req.query.email;
     }
-    res.render("remove", { email: email, error: null });
+    res.render("remove", { email: email });
 });
 
 

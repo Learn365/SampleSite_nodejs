@@ -6,6 +6,7 @@ module.exports = {
             email: req.fields.email
         }
         gits.push(git);
+        req.flash("success", "Added Successfully");
         res.render("add", { gits: gits });
     },
 
@@ -27,10 +28,11 @@ module.exports = {
             gits.push(git);
             // update oEmail to the latest
             oEmail = git.email;
+            req.flash("success", "Updated Successfully");
             res.redirect(302, "/gits/edit?email=" + oEmail);
         } else {
-            var error = "NOT EXISTS";
-            res.render("edit", { git: git, oEmail: oEmail, error: error });
+            req.flash("error", "NOT EXISTS");
+            res.render("edit", { git: git, oEmail: oEmail });
         }
     },
 
@@ -39,9 +41,10 @@ module.exports = {
             return g.email === oEmail;
         });
         if (git) {
-            res.render("edit", { git: git, oEmail: oEmail, error: null });
+            res.render("edit", { git: git, oEmail: oEmail });
         } else {
-            res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: oEmail, error: "NOT EXISTS" });
+            req.flash("error", "NOT EXISTS")
+            res.render("edit", { git: { git: "", name: "", email: "" }, oEmail: oEmail });
         }
     },
 
@@ -50,12 +53,11 @@ module.exports = {
             return g.email === email;
         });
 
-        var error = null;
         if (!git) {
-            error = "Nothing found";
+            req.flash("error", "NOTHING FOUND");
         }
 
-        res.render("find", { git: git, error: error });
+        res.render("find", { git: git });
     },
     remove: function remove(req, res, gits) {
         // acquire email
@@ -69,7 +71,8 @@ module.exports = {
             gits.splice(index, 1);
             res.redirect(302, "/");
         } else {
-            res.render("remove", { email: email, error: "NOT EXISTS" });
+            req.flash("error", "NOT EXISTS");
+            res.render("remove", { email: email });
         }
     }
 };

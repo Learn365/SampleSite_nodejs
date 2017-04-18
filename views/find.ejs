@@ -5,6 +5,7 @@
         <label for="email">Email: </label><input type="text" id="email" name="email"></input><input type="submit" value="Find"></input>
     </form>
     <hr/>
+    <%- include("components/notification")%>
     <% if (git){ %>
         <table>
             <tr>
@@ -16,7 +17,4 @@
             </tr>
         </table>
     <% }%>
-    <% if (error) { %>
-        <h3><%= error %></h3>
-    <% } %>
 <%- include("components/footer")%>

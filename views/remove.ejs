@@ -5,10 +5,5 @@
         <label for="email">Email: </label><input type="text" id="email" name="email" value="<%= email %>"></input>
         <input type="submit" value="Remove"></input>
     </form>
-    <% if(error) { %>
-        <h3>
-            <%= error %>
-        </h3>
-    <% }%>
-</body>
+<%- include("components/notification")%>
 <%- include("components/footer")%>
