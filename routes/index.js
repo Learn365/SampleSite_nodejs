@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 
 var controller = require("../controllers/git");
-var qs = require("querystring");
 var gits = require("../store/gits").gits;
 
 // GET: / 
@@ -26,7 +25,7 @@ router.get("/add", function(req, res) {
 // POST: /add
 // add a git entry
 router.post("/add", function(req, res) {
-    controller.add(req, res, gits, qs);
+    controller.add(req, res, gits);
 });
 
 // GET: /edit
@@ -45,7 +44,7 @@ router.get("/edit", function(req, res) {
 // POST: /edit
 // edit a git entry
 router.post("/edit", function(req, res) {
-    controller.edit(req, res, gits, qs);
+    controller.edit(req, res, gits);
 });
 
 // GET: /find
@@ -75,7 +74,7 @@ router.get("/remove", function(req, res) {
 // POST: /remove
 // remove a git entry
 router.post("/remove", function(req, res) {
-    controller.remove(req, res, gits, qs);
+    controller.remove(req, res, gits);
 });
 
 module.exports = router;

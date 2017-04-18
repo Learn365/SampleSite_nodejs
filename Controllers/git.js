@@ -1,50 +1,37 @@
 module.exports = {
-    add: function add(req, res, gits, qs) {
-        var formData = "";
-        req.on("data", function(chunk) {
-            formData += chunk;
-        });
-
-        req.on("end", function() {
-            var git = qs.parse(formData);
-            gits.push(git);
-            res.render("add", { gits: gits });
-        });
+    add: function add(req, res, gits) {
+        var git = {
+            git: req.fields.git,
+            name: req.fields.name,
+            email: req.fields.email
+        }
+        gits.push(git);
+        res.render("add", { gits: gits });
     },
 
-    edit: function edit(req, res, gits, qs) {
-        var formdata = "";
+    edit: function edit(req, res, gits) {
         // init email parameter
         var oEmail = req.query.email;
-        req.on("data", function(chunk) {
-            formdata += chunk;
+        var git = {
+            git: req.fields.git,
+            name: req.fields.name,
+            email: req.fields.email
+        };
+
+        var index = gits.findIndex(function(g) {
+            return g.email === oEmail;
         });
 
-        // remove the git entry form the collection
-        req.on("end", function() {
-            var data = qs.parse(formdata);
-            var git = {
-                git: data.git,
-                name: data.name,
-                email: data.email
-            };
-
-            var index = gits.findIndex(function(g) {
-                return g.email === oEmail;
-            });
-
-            if (index >= 0) {
-                gits.splice(index, 1);
-                gits.push(git);
-                // update oEmail to the latest
-                oEmail = git.email;
-                res.redirect(302, "/edit?email=" + oEmail);
-            } else {
-                var error = "NOT EXISTS";
-                res.render("edit", { git: git, oEmail: oEmail, error: error });
-            }
-
-        });
+        if (index >= 0) {
+            gits.splice(index, 1);
+            gits.push(git);
+            // update oEmail to the latest
+            oEmail = git.email;
+            res.redirect(302, "/edit?email=" + oEmail);
+        } else {
+            var error = "NOT EXISTS";
+            res.render("edit", { git: git, oEmail: oEmail, error: error });
+        }
     },
 
     editWithEmail: function editWithEmail(req, res, gits, oEmail) {
@@ -70,27 +57,19 @@ module.exports = {
 
         res.render("find", { git: git, error: error });
     },
-    remove: function remove(req, res, gits, qs) {
+    remove: function remove(req, res, gits) {
         // acquire email
-        var formdata = "";
-        req.on("data", function(chunk) {
-            formdata += chunk;
+        var email = req.fields.email;
+
+        var index = gits.findIndex(function(g) {
+            return g.email === email;
         });
 
-        // remove the git entry form the collection
-        req.on("end", function() {
-            var email = qs.parse(formdata).email;
-
-            var index = gits.findIndex(function(g) {
-                return g.email === email;
-            });
-
-            if (index >= 0) {
-                gits.splice(index, 1);
-                res.redirect(302, "/");
-            } else {
-                res.render("remove", { email: email, error: "NOT EXISTS" });
-            }
-        });
+        if (index >= 0) {
+            gits.splice(index, 1);
+            res.redirect(302, "/");
+        } else {
+            res.render("remove", { email: email, error: "NOT EXISTS" });
+        }
     }
 };

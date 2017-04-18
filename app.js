@@ -8,6 +8,8 @@ app.set("views", path.join(__dirname, "views"));
 // config the template engine
 app.set("view engine", "ejs");
 
+app.use(require("express-formidable")());
+
 app.use("/", indexRouter);
 
 // 404
