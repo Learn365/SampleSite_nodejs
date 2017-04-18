@@ -79,7 +79,7 @@ module.exports = {
 
         // remove the git entry form the collection
         req.on("end", function() {
-            var email = qs.parse(formdata).removeEmail;
+            var email = qs.parse(formdata).email;
 
             var index = gits.findIndex(function(g) {
                 return g.email === email;
