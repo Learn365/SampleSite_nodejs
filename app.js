@@ -8,9 +8,6 @@ app.set("views", path.join(__dirname, "views"));
 // config the template engine
 app.set("view engine", "ejs");
 
-// config the form handler
-app.use(require("express-formidable")());
-
 app.use("/", indexRouter);
 
 app.listen("8080");
