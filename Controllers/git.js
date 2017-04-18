@@ -31,7 +31,6 @@ module.exports = {
     },
 
     edit: function edit(request, response, app, qs, fs) {
-        'use strict';
         var formdata = "";
         request.on("data", function(chunk) {
             formdata += chunk;
@@ -60,7 +59,6 @@ module.exports = {
     },
 
     editWithEmail: function editWithEmail(request, response, app, email, fs) {
-        'use strict';
         var git = app.gits.find(function(g) {
             return g.email === email;
         });
@@ -78,7 +76,6 @@ module.exports = {
     },
 
     find: function find(request, response, app, email, fs) {
-        'use strict';
         var git = app.gits.find(function(g) {
             return g.email === email;
         });
@@ -97,11 +94,11 @@ module.exports = {
                 "</tr>" +
                 "</table>" +
                 "<form action=\"/edit\" method=\"GET\">" +
-                "<input type=\"hidden\" name=\"editEmail\" value=\"" + git.email + "\"></input>" +
+                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
                 "<input type=\"submit\" value=\"Edit\"></input>" +
                 "</form>" +
                 "<form action=\"/remove\" method=\"POST\">" +
-                "<input type=\"hidden\" name=\"removeEmail\" value=\"" + git.email + "\"></input>" +
+                "<input type=\"hidden\" name=\"email\" value=\"" + git.email + "\"></input>" +
                 "<input type=\"submit\" value=\"Remove\"></input>" +
                 "</form>";
         } else {
@@ -118,7 +115,6 @@ module.exports = {
         });
     },
     remove: function remove(request, response, app, qs, fs) {
-        'use strict';
         // acquire email
         var formdata = "";
         request.on("data", function(chunk) {
