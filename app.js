@@ -70,6 +70,10 @@ app.use(expressWinston.errorLogger({
     ]
 }));
 
+app.use(function(err, req, res, next) {
+    res.render("error", { error: err });
+});
+
 app.listen(config.app.port, function() {
     console.log(`${pkg.name} is listening on port: ${config.app.port}`);
 });
