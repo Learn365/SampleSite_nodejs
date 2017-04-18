@@ -1,7 +1,7 @@
 var path = require("path");
 var express = require("express");
 var app = express();
-var indexRouter = require("./routes/index");
+var router = require("./routes/index");
 
 // config the dir for locating the templates
 app.set("views", path.join(__dirname, "views"));
@@ -10,13 +10,7 @@ app.set("view engine", "ejs");
 
 app.use(require("express-formidable")());
 
-app.use("/", indexRouter);
-
-// 404
-app.use(function(req, res) {
-    if (!res.headersSent) {
-        res.status(404).render("404");
-    }
-});
+//config routing
+router(app);
 
 app.listen("8080");

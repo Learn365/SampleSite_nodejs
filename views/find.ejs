@@ -1,7 +1,7 @@
 <%- include("components/header")%>
-    <a href="/index" title="home">Home</a> &gt; Find
+    <a href="/" title="home">Home</a> &gt; Find
     <hr/>
-    <form action="/find" method="GET">
+    <form action="/gits/find" method="GET">
         <label for="email">Email: </label><input type="text" id="email" name="email"></input><input type="submit" value="Find"></input>
     </form>
     <hr/>
@@ -11,8 +11,8 @@
                 <td><%= git.git %></td>
                 <td><%= git.name %></td>
                 <td><%= git.email %></td>
-                <td><a href="/edit?email=<%= git.email %>" title="Edit">Edit</a></td>
-                <td><a href="/remove?email=<%= git.email %>" title="Remove">Remove</a></td>
+                <td><a href="/gits/edit?email=<%= git.email %>" title="Edit">Edit</a></td>
+                <td><a href="/gits/remove?email=<%= git.email %>" title="Remove">Remove</a></td>
             </tr>
         </table>
     <% }%>

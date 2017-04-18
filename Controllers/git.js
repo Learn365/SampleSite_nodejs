@@ -27,7 +27,7 @@ module.exports = {
             gits.push(git);
             // update oEmail to the latest
             oEmail = git.email;
-            res.redirect(302, "/edit?email=" + oEmail);
+            res.redirect(302, "/gits/edit?email=" + oEmail);
         } else {
             var error = "NOT EXISTS";
             res.render("edit", { git: git, oEmail: oEmail, error: error });

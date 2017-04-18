@@ -15,8 +15,8 @@
                 <td><%= git.git %></td>
                 <td><%= git.name %></td>
                 <td><%= git.email %></td>
-                <td><a href="/edit?email=<%= git.email %>">Edit</a></td>
-                <td><a href="/edit?email=<%= git.email %>">Remove</a></td>
+                <td><a href="/gits/edit?email=<%= git.email %>">Edit</a></td>
+                <td><a href="/gits/remove?email=<%= git.email %>">Remove</a></td>
             </tr>
         <% })%>
         </tbody>
