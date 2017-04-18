@@ -79,11 +79,4 @@ router.post("/remove", function(req, res) {
     controller.remove(req, res, gits, qs);
 });
 
-// 404
-app.use(function(req, res) {
-    if (!res.headersSent) {
-        res.status(404).render("404");
-    }
-});
-
 module.exports = router;
