@@ -2,10 +2,7 @@ var express = require("express");
 var app = express();
 var router = express.Router();
 
-var mFind = require("../actions/find");
-var mAdd = require("../actions/add");
-var mEdit = require("../actions/edit");
-var mRemove = require("../actions/remove");
+var controller = require("../controllers/git");
 var fs = require("fs");
 var qs = require("querystring");
 var gits = require("../cache/gits").gits;
@@ -36,7 +33,7 @@ router.get("/edit", function(req, res) {
     // edit with email
     if (req.query.email) {
         var pEmail = req.query.email;
-        mEdit.editWithEmail(req, res, gits, pEmail, fs);
+        controller.editWithEmail(req, res, gits, pEmail, fs);
     } else {
         res.status(200).sendfile("./edit.html");
     }
@@ -49,7 +46,7 @@ router.get("/find", function(req, res) {
     // find git entry by email
     if (req.query.email) {
         var pEmail = req.query.email;
-        mFind.find(req, res, gits, pEmail, fs);
+        controller.find(req, res, gits, pEmail, fs);
     } else {
         res.status(200).sendfile("./find.html");
     }
@@ -64,19 +61,19 @@ router.get("/remove", function(req, res) {
 // POST: /add
 // add a git entry
 router.post("/add", function(req, res) {
-    mAdd.add(req, res, gits);
+    controller.add(req, res, gits, qs);
 });
 
 // POST: /edit
 // edit a git entry
 router.post("/edit", function(req, res) {
-    mEdit.edit(req, res, gits, qs, fs);
+    controller.edit(req, res, gits, qs);
 });
 
 // POST: /remove
 // remove a git entry
 router.post("/remove", function(req, res) {
-    mRemove.remove(req, res, gits, qs, fs);
+    controller.remove(req, res, gits, qs);
 });
 
 // 404
