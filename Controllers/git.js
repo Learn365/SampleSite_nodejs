@@ -12,11 +12,7 @@ module.exports = {
         });
     },
 
-<<<<<<< HEAD
     edit: function edit(req, res, gits, qs) {
-=======
-    edit: function edit(request, response, app, qs, fs) {
->>>>>>> master
         var formdata = "";
         req.on("data", function(chunk) {
             formdata += chunk;
@@ -50,26 +46,9 @@ module.exports = {
         });
     },
 
-<<<<<<< HEAD
     editWithEmail: function editWithEmail(req, res, gits, oEmail) {
         var git = gits.find(function(g) {
             return g.email === oEmail;
-=======
-    editWithEmail: function editWithEmail(request, response, app, email, fs) {
-        var git = app.gits.find(function(g) {
-            return g.email === email;
-        });
-
-
-        fs.readFile("./edit.html", function(err, data) {
-            if (err) throw err;
-
-            var content = data.toString();
-            content = content.replace(/<a\shref="\/find\?email=.*?"\stitle="find">/gi, "<a href=\"/find?email=" + git.email + "\" title=\"find\">");
-            content = content.replace(/<input\stype="hidden"\svalue=".*?"\sname="oEmail"><\/input>/gi, "<input type=\"hidden\" value=\"" + git.email + "\" name=\"oEmail\"></input>");
-            response.writeHead(200, { "content-type": "text/html" });
-            response.end(content);
->>>>>>> master
         });
         if (git) {
             res.render("edit", { git: git, oEmail: oEmail, error: null });
@@ -78,13 +57,8 @@ module.exports = {
         }
     },
 
-<<<<<<< HEAD
     find: function find(req, res, gits, email, fs) {
         var git = gits.find(function(g) {
-=======
-    find: function find(request, response, app, email, fs) {
-        var git = app.gits.find(function(g) {
->>>>>>> master
             return g.email === email;
         });
 
@@ -122,12 +96,7 @@ module.exports = {
             res.end(content);
         });
     },
-<<<<<<< HEAD
-
     remove: function remove(req, res, gits, qs) {
-=======
-    remove: function remove(request, response, app, qs, fs) {
->>>>>>> master
         // acquire email
         var formdata = "";
         req.on("data", function(chunk) {
