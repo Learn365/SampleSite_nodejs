@@ -1,10 +1,10 @@
 var app = {};
-app.add = require('./actions/add').add;
-app.find = require('./actions/find').find;
-var mEdit = require('./actions/edit');
-app.edit = mEdit.edit;
-app.editWithEmail = mEdit.editWithEmail;
-app.remove = require('./actions/remove').remove;
+var controller = require("./controllers/git");
+app.add = controller.add;
+app.find = controller.find;
+app.edit = controller.edit;
+app.editWithEmail = controller.editWithEmail;
+app.remove = controller.remove;
 
 var http = require("http");
 var fs = require("fs");
