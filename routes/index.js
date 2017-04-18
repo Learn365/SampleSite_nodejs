@@ -1,3 +1,4 @@
+var path = require("path");
 var express = require("express");
 var app = express();
 var router = express.Router();
@@ -5,19 +6,20 @@ var router = express.Router();
 var controller = require("../controllers/git");
 var fs = require("fs");
 var qs = require("querystring");
-var gits = require("../cache/gits").gits;
+var gits = require("../store/gits").gits;
+var rootPath = path.join(__dirname, "../");
 
 
 // GET: / 
 // home page
 router.get("/", function(req, res) {
-    res.status(200).sendfile("./index.html");
+    res.status(200).sendFile("index.html", { root: rootPath });
 });
 
 // GET: /index
 // display home page
 router.get("/index", function(req, res) {
-    res.status(200).sendfile("./index.html");
+    res.status(200).sendFile("index.html", { root: rootPath });
 });
 
 // GET: /add
@@ -35,7 +37,7 @@ router.get("/edit", function(req, res) {
         var pEmail = req.query.email;
         controller.editWithEmail(req, res, gits, pEmail, fs);
     } else {
-        res.status(200).sendfile("./edit.html");
+        res.status(200).sendFile("edit.html", { root: rootPath });
     }
 });
 
@@ -48,14 +50,14 @@ router.get("/find", function(req, res) {
         var pEmail = req.query.email;
         controller.find(req, res, gits, pEmail, fs);
     } else {
-        res.status(200).sendfile("./find.html");
+        res.status(200).sendFile("find.html", { root: rootPath });
     }
 });
 
 // GET: /remove
 // display remove page
 router.get("/remove", function(req, res) {
-    res.status(200).sendfile("./remove.html");
+    res.status(200).sendFile("remove.html", { root: rootPath });
 });
 
 // POST: /add
@@ -79,7 +81,7 @@ router.post("/remove", function(req, res) {
 // 404
 app.use(function(req, res) {
     if (!res.headersSent) {
-        res.status(404).sendfile("./404.html");
+        res.status(404).sendFile("404.html", { root: rootPath });
     }
 });
 
