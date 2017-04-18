@@ -1,4 +1,3 @@
-var path = require("path");
 var express = require("express");
 var app = express();
 var router = express.Router();
@@ -6,8 +5,6 @@ var router = express.Router();
 var controller = require("../controllers/git");
 var qs = require("querystring");
 var gits = require("../store/gits").gits;
-var rootPath = path.join(__dirname, "../");
-
 
 // GET: / 
 // home page
@@ -85,7 +82,7 @@ router.post("/remove", function(req, res) {
 // 404
 app.use(function(req, res) {
     if (!res.headersSent) {
-        res.status(404).sendFile("404.html", { root: rootPath });
+        res.status(404).render("404");
     }
 });
 
